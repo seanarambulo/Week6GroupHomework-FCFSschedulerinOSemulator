@@ -7,28 +7,29 @@
 #include <atomic>
 #include <semaphore>
 
-class FCFSSchedulerThread {
+class FCFSSchedulerThread
+{
 public:
-    FCFSSchedulerThread(int numCores);
-    ~FCFSSchedulerThread();
+	FCFSSchedulerThread(int numCores);
+	~FCFSSchedulerThread();
 
-    int getNumCores() const { return numberOfCores; }
+	int getNumCores() const { return numberOfCores; }
 
-    // Start the scheduler thread and all worker cores
-    void start();
+	// Start the scheduler thread and all worker cores
+	void start();
 
-    // Stop gracefully
-    void stop();
+	// Stop gracefully
+	void stop();
 
 private:
-    void run();
+	void run();
 
-    int numberOfCores;
-    std::vector<std::shared_ptr<CPUWorkerThread>> cpuCores;
-    
-    std::thread schedulerThread;
-    std::atomic<bool> running;
-    
-    // The max limit is set to 4
-    std::counting_semaphore<4> coreSemaphore;
+	int numberOfCores;
+	std::vector<std::shared_ptr<CPUWorkerThread>> cpuCores;
+
+	std::thread schedulerThread;
+	std::atomic<bool> running;
+
+	// The max limit is set to 4
+	std::counting_semaphore<4> coreSemaphore;
 };

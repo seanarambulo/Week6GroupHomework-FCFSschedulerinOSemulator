@@ -7,43 +7,45 @@
 #include <semaphore>
 #include <string>
 
-class ProcessManager {
+class ProcessManager
+{
 public:
-    // Singleton access
-    static ProcessManager& getInstance() {
-        static ProcessManager instance;
-        return instance;
-    }
+	// Singleton access
+	static ProcessManager& getInstance()
+	{
+		static ProcessManager instance;
+		return instance;
+	}
 
-    ProcessManager(ProcessManager const&) = delete;
-    void operator=(ProcessManager const&) = delete;
+	ProcessManager(const ProcessManager&) = delete;
+	void operator=(const ProcessManager&) = delete;
 
-    void initializeProcesses();
+	void initializeProcesses();
 
-    // Scheduler methods
-    bool isReadyQueueEmpty();
-    std::shared_ptr<Process> dequeueReadyProcess();
-    
-    // Process tracking
-    void addRunningProcess(std::shared_ptr<Process> process);
-    void removeRunningProcess(std::shared_ptr<Process> process);
-    void addFinishedProcess(std::shared_ptr<Process> process);
+	// Scheduler methods
+	bool isReadyQueueEmpty();
+	std::shared_ptr<Process> dequeueReadyProcess();
 
-    // UI methods
-    std::string getProcessList();
+	// Process tracking
+	void addRunningProcess(std::shared_ptr<Process> process);
+	void removeRunningProcess(std::shared_ptr<Process> process);
+	void addFinishedProcess(std::shared_ptr<Process> process);
 
-    // Counters or stats
-    int getFinishedCount();
-    int getRunningProcessesCount();
+	// UI methods
+	std::string getProcessList();
+
+	// Counters or stats
+	int getFinishedCount();
+	int getRunningProcessesCount();
 
 private:
-    ProcessManager() = default;
+	ProcessManager() = default;
 
-    std::queue<std::shared_ptr<Process>> readyQueue;
-    std::vector<std::shared_ptr<Process>> runningProcesses;
-    std::vector<std::shared_ptr<Process>> finishedProcesses;
+	std::queue<std::shared_ptr<Process>> readyQueue;
+	std::vector<std::shared_ptr<Process>> runningProcesses;
+	std::vector<std::shared_ptr<Process>> finishedProcesses;
 
-    inline static const int N_THREADS_PM = 1;
-    inline static const int MAX_ACCESS_PM = 1;
-    inline static std::counting_semaphore<N_THREADS_PM> pmSemaphore{MAX_ACCESS_PM};
+	inline static constexpr int N_THREADS_PM = 1;
+	inline static constexpr int MAX_ACCESS_PM = 1;
+	inline static std::counting_semaphore<N_THREADS_PM> pmSemaphore{MAX_ACCESS_PM};
 };

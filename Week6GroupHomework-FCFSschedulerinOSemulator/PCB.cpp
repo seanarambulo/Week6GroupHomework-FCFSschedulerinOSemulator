@@ -1,7 +1,8 @@
 #include "PCB.h"
 
-PCB::PCB(int pid, const std::string& name) 
-    : pid(pid), name(name), state(ProcessState::READY), assignedCoreID(-1) {
+PCB::PCB(int pid, const std::string& name)
+	: pid(pid), name(name), state(ProcessState::READY), assignedCoreID(-1)
+{
 }
 
 int PCB::getPID() const { return pid; }

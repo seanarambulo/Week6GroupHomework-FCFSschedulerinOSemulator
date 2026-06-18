@@ -2,14 +2,15 @@
 #include <string>
 #include <fstream>
 
-class ProcessLogger {
+class ProcessLogger
+{
 public:
-    ProcessLogger(const std::string& processName);
-    ~ProcessLogger();
+	ProcessLogger(const std::string& processName);
+	~ProcessLogger();
 
-    void log(int coreID, const std::string& message);
+	void log(int coreID, const std::string& message);
 
 private:
-    std::ofstream logFile;
-    std::string processName;
+	std::ofstream logFile;
+	std::string processName;
 };
